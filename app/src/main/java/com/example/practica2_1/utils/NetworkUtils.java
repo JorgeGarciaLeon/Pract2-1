@@ -11,17 +11,23 @@ import java.util.Scanner;
 
 public class NetworkUtils {
     final static String GITHUB_BASE_URL = "https://akabab.github.io/superhero-api/api/";
-    final static String allJson = "all.json";
+    final private static String allJson = "all.json";
+    final private static String searchId = "/id/";
 
     public static URL buildUrl(String idSuperHero) {
-        Uri buildUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
-                .appendPath(allJson)
-                .build();
+        Uri buildUri;
+
+        if (idSuperHero.isEmpty()) {
+            buildUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+                    .appendPath(allJson)
+                    .build();
+        } else  {
+            buildUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+                    .appendPath(searchId + idSuperHero + ".json")
+                    .build();
+        }
 
         URL url = null;
-
-
-
 
         try {
             url = new URL(buildUri.toString());
